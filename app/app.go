@@ -1519,9 +1519,9 @@ func (app *App) RegisterPendingTxListener(listener evmante.PendingTxListener) {
 	app.pendingTxListeners = append(app.pendingTxListeners, listener)
 }
 
-func (app *App) onPendingTx(hash common.Hash) {
+func (app *App) onPendingTx(tx *evmtypes.MsgEthereumTx) {
 	for _, listener := range app.pendingTxListeners {
-		listener(hash)
+		listener(tx)
 	}
 }
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## Macabim pending transaction lookup
+
+* Pin Ethermint pending-body delivery so announced hashes resolve before pool admission completes.
+
 ## UNRELEASED
 
 ### Improvements
