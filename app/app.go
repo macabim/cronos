@@ -49,7 +49,6 @@ import (
 	e2eekeeper "github.com/crypto-org-chain/cronos/x/e2ee/keeper"
 	e2eekeyring "github.com/crypto-org-chain/cronos/x/e2ee/keyring"
 	e2eetypes "github.com/crypto-org-chain/cronos/x/e2ee/types"
-	"github.com/ethereum/go-ethereum/common"
 	_ "github.com/ethereum/go-ethereum/eth/tracers/js"
 	_ "github.com/ethereum/go-ethereum/eth/tracers/native"
 	"github.com/evmos/ethermint/ante/cache"
@@ -1519,9 +1518,9 @@ func (app *App) RegisterPendingTxListener(listener evmante.PendingTxListener) {
 	app.pendingTxListeners = append(app.pendingTxListeners, listener)
 }
 
-func (app *App) onPendingTx(hash common.Hash) {
+func (app *App) onPendingTx(tx *evmtypes.MsgEthereumTx) {
 	for _, listener := range app.pendingTxListeners {
-		listener(hash)
+		listener(tx)
 	}
 }
 
