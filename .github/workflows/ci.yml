@@ -1,0 +1,26 @@
+# Macabim fork CI: build the production binary the same way the node does, then run unit tests.
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - name: Build (same as production)
+        run: NETWORK=mainnet make build && ./build/cronosd version --long
+      - name: Unit tests
+        run: make test
